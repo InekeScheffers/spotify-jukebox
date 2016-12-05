@@ -1,3 +1,5 @@
+// get autoprefixer module for the postcss
+const autoprefixer = require ( 'autoprefixer' )
 const config = {
 	// get the main js file
     entry: __dirname + '/public/js/main.js',
