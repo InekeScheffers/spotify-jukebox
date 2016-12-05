@@ -18,9 +18,20 @@ const config = {
                 query: {
                     presets: ['es2015']
                 }
-            }
-        ],
-    }
+            },
+      		{
+		        // look for .scss files
+		        test: /\.scss$/,
+		        // compile to normal css styles and run the postcss.
+		        loaders: ["style", "css", "sass", "postcss"]
+	      	}
+    	]
+  	},
+	// transpile css to support last 2 versions of all browsers.
+	postcss: [
+    	autoprefixer( { browsers: ['last 2 versions'] } )
+    ]
+
 }
 
 module.exports = config
