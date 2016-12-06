@@ -5,11 +5,15 @@ const express = require('express')
 const request = require('request') // "Request" library
 const querystring = require('querystring')
 
+// require and configure dotenv
+const dotenv = require('dotenv').config()
+
 // create a router
 const router = express.Router()
 
-const client_id = '***REMOVED***'; // Your client id
-const client_secret = '***REMOVED***'; // Your secret
+// stored client id and secret key in environment var
+const client_id = process.env.DB_CLIENT_ID; // Your client id
+const client_secret = process.env.DB_CLIENT_SECRET; // Your secret key
 const redirect_uri = 'http://localhost:8000/callback'; // Your redirect uri
 
 var generateRandomString = function(length) {
@@ -32,6 +36,7 @@ router.route('/login')
 
 	  // your application requests authorization
 	  var scope = 'user-read-private user-read-email';
+	  // the service’s /authorize endpoint, passing to it the client ID, scopes, and redirect URI
 	  res.redirect('https://accounts.spotify.com/authorize?' +
 	    querystring.stringify({
 	      response_type: 'code',
@@ -60,6 +65,7 @@ router.route('/callback')
 	  } else {
 	    res.clearCookie(stateKey);
 	    var authOptions = {
+	    //Service’s /api/token endpoint, passing to it the authorization code returned by the first call and the client secret key. This second call returns an access token and also a refresh token.
 	      url: 'https://accounts.spotify.com/api/token',
 	      form: {
 	        code: code,
@@ -111,6 +117,7 @@ router.route('/refresh_token')
   // requesting access token from refresh token
   var refresh_token = req.query.refresh_token;
   var authOptions = {
+  	// a refresh token is sent to /api/token. This will generate a new access token that we can issue when the previous has expired.
     url: 'https://accounts.spotify.com/api/token',
     headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
     form: {

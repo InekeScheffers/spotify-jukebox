@@ -1,5 +1,6 @@
 // This section sets up an express server dependent on pug
 const express = require('express')
+// for spotify login
 var cookieParser = require('cookie-parser')
 const app = express()
 

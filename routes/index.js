@@ -10,7 +10,7 @@ router.route('/')
 // redirect to root if someone goes to /index
 router.route('/index')
 	.get((req, res) => {
-		res.redirect('/')
+		res.redirect('index')
 	})
 
 // module.exports says: the current file when required will send back this thing
