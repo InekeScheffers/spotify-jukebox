@@ -12,6 +12,7 @@ const config = {
     watch: true,
     // module loader, use all these modules when creating
     module: {
+    	// webpack can only read js, loaders teach webpack how to load files for bundling
         loaders: [
             {
                 test: /\.js$/,
