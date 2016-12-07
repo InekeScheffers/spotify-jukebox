@@ -1,4 +1,4 @@
-$(document).ready( () => {
+module.exports = $(document).ready( () => {
         console.log("triggered")
         /**
          * Obtains parameters from the hash of the URL
@@ -56,6 +56,7 @@ $(document).ready( () => {
               $('#loggedin').hide();
           }
 
+          // for this function we need the loggedin user screen with all its data
           document.getElementById('obtain-new-token').addEventListener('click', function() {
             $.ajax({
               url: '/refresh_token',

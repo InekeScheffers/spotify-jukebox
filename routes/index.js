@@ -4,7 +4,7 @@ const router = express.Router()
 
 router.route('/')
 	.get((req, res) => {
-			res.render('login')
+			res.render('index')
 	})
 
 // redirect to root if someone goes to /index
