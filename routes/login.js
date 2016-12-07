@@ -8,6 +8,9 @@ const querystring = require('querystring')
 // require and configure dotenv
 const dotenv = require('dotenv').config()
 
+// require database.js module
+let db = require(__dirname + '/../modules/database')
+
 // create a router
 const router = express.Router()
 
@@ -30,6 +33,9 @@ var stateKey = 'spotify_auth_state';
 
 router.route('/login')
 	.get(function(req, res) {
+
+		// if al ingelogd(session) direct naar /
+		// else dit:
 
 	  var state = generateRandomString(16);
 	  res.cookie(stateKey, state);
@@ -54,7 +60,6 @@ router.route('/callback')
 
 	  // your application requests refresh and access tokens
 	  // after checking the state parameter
-
 	  var code = req.query.code || null;
 	  var state = req.query.state || null;
 	  var storedState = req.cookies ? req.cookies[stateKey] : null;
@@ -82,9 +87,10 @@ router.route('/callback')
 
 	    request.post(authOptions, function(error, response, body) {
 	      if (!error && response.statusCode === 200) {
-
 	        var access_token = body.access_token,
 	            refresh_token = body.refresh_token;
+
+	        console.log(body)
 
 	        var options = {
 	          url: 'https://api.spotify.com/v1/me',
@@ -94,15 +100,28 @@ router.route('/callback')
 
 	        // use the access token to access the Spotify Web API
 	        request.get(options, function(error, response, body) {
-	          console.log(body);
+	          	console.log(body);// naar client sturen, meesturen met redirect/render
+	          	// id, access token en refresh token in database opslaan
+	          	// create new user (row) in table users
+				db.User.create ({
+					spotify_id: 	body.id, 
+					access_token: 	access_token,
+					// store hashed password 
+					refresh_token: 	refresh_token
+				})
+				// when user is in database
+				.then( (user) => {
+					// start session, store spotify_id and redirect to index
+					req.session.user = user.spotify_id;
+					// we can also pass the token to the browser to make requests from there
+					// nu nog met access token in url, straks zonder!!!
+			        res.redirect('/#' +
+			          querystring.stringify({
+			            access_token: access_token,
+			            refresh_token: refresh_token
+			          }));
+						})
 	        });
-
-	        // we can also pass the token to the browser to make requests from there
-	        res.redirect('/#' +
-	          querystring.stringify({
-	            access_token: access_token,
-	            refresh_token: refresh_token
-	          }));
 	      } else {
 	        res.redirect('/#' +
 	          querystring.stringify({
