@@ -24,9 +24,11 @@ console.log('Server is running...')
 // require routes
 const indexRouter = require(__dirname + '/routes/index')
 const loginRouter = require(__dirname + '/routes/login')
+const logoutRouter = require(__dirname + '/routes/logout')
 
 // use routes
 app.use('/', indexRouter)
 app.use('/', loginRouter)
+app.use('/', logoutRouter)
 
 app.listen(8000)
