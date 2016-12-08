@@ -1,5 +1,4 @@
 node_modules
 .DS_store
 public/js/webpack.js
-public/js/webpack.js.map
 .env
