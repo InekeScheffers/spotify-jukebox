@@ -9,13 +9,13 @@ html
 					h1 #{user.display_name}
 					div.media
 						div.pull-left
-							img.media-object(width='150', src="" + user.images[0].url)
+							img.media-object(width='150', src="" + user.profile_image)
 						div.media-body
 							dl.dl-horizontal
 								dt Display name
 									dd #{user.display_name}
 								dt Id
-									dd #{user.id}
+									dd #{user.spotify_id}
 								dt Email
 									dd #{user.email}
 								dt Spotify URI

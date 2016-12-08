@@ -2,11 +2,20 @@ const express = require('express')
 // create a router
 const router = express.Router()
 
+// require database.js module
+let db = require(__dirname + '/../modules/database')
+
 router.route('/')
 	.get((req, res) => {
 			let user = req.session.user;
 			if(user){
-				res.render('index')
+				db.User.findOne({
+	        			where: {
+	        				spotify_id: user
+	        			}
+	        		}).then((user) => {
+	        			res.render('index', {user:user})
+	        		})
 			} else {
 				res.render('login')
 			}

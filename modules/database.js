@@ -22,11 +22,31 @@ let User = db.define('user', {
 	refresh_token: {
 		type: Sequelize.STRING,
 		allowNull: false
+	},
+	display_name: {
+		type: Sequelize.STRING,
+		allowNull: false
+	},
+	profile_image: {
+		type: Sequelize.STRING,
+		allowNull: false
+	},
+	email: {
+		type: Sequelize.STRING,
+		allowNull: false
+	},
+	uri: {
+		type: Sequelize.STRING,
+		allowNull: false
+	},
+	country: {
+		type: Sequelize.STRING,
+		allowNull: false
 	}
 })
 
 // for when I'm not deleting users yet, can be set to sync when log out and expired session delete user
-// db.sync({force:true})
+//db.sync({force:true})
 
 db.sync()
 

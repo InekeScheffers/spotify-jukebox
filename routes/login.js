@@ -109,7 +109,12 @@ router.route('/callback')
 	        	db.User.upsert({
 	        		spotify_id: 	body.id, 
 					access_token: 	access_token,
-					refresh_token: 	refresh_token
+					refresh_token: 	refresh_token,
+					display_name: 	body.display_name,
+					profile_image: 	body.images[0].url,
+					email: 			body.email,
+					uri: 			body.uri,
+					country: 		body.country
 	        	}).then(() => {
 	        		//because upsert can only return a boolean, find the logged in user
 	        		db.User.findOne({
@@ -130,7 +135,7 @@ router.route('/callback')
 					        //     refresh_token: refresh_token
 					        // }));
 					        console.log(body.images[0].url)
-					        res.render('index', {user:body})
+					        res.render('index', {user:user})
 			        	}
 		        	})
 	        	})
