@@ -5,26 +5,27 @@ const router = express.Router()
 // require database.js module
 let db = require(__dirname + '/../modules/database')
 
-router.route('/')
+router.route('/logout')
 	.get((req, res) => {
 			let user = req.session.user;
 			if(user){
-				db.User.findOne({
-	        			where: {
-	        				spotify_id: user
-	        			}
-	        		}).then((user) => {
-	        			res.render('index', {user:user})
-	        		})
+				db.User.destroy({
+  					where: {
+   						spotify_id: req.session.user
+  					}
+				})
+				.then( () => {
+					req.session.destroy( (err) => {
+						if(err) {
+							throw err;
+						}
+						// redirect to log in page and show message
+						res.redirect('/');
+					})
+				})
 			} else {
-				res.render('login')
+				res.redirect('/')
 			}
-	})
-
-// redirect to root if someone goes to /index
-router.route('/index')
-	.get((req, res) => {
-		res.redirect('/')
 	})
 
 // module.exports says: the current file when required will send back this thing

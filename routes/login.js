@@ -8,6 +8,9 @@ const querystring = require('querystring')
 // require and configure dotenv
 const dotenv = require('dotenv').config()
 
+// require database.js module
+let db = require(__dirname + '/../modules/database')
+
 // create a router
 const router = express.Router()
 
@@ -30,21 +33,30 @@ var stateKey = 'spotify_auth_state';
 
 router.route('/login')
 	.get(function(req, res) {
+		// if al ingelogd(session) direct naar /
+		let user = req.session.user
+		if(user){
+			 res.redirect('/')
+		} else {
+		// else dit:
 
-	  var state = generateRandomString(16);
-	  res.cookie(stateKey, state);
+		  var state = generateRandomString(16);
+		  res.cookie(stateKey, state);
 
-	  // your application requests authorization
-	  var scope = 'user-read-private user-read-email';
-	  // the service’s /authorize endpoint, passing to it the client ID, scopes, and redirect URI
-	  res.redirect('https://accounts.spotify.com/authorize?' +
-	    querystring.stringify({
-	      response_type: 'code',
-	      client_id: client_id,
-	      scope: scope,
-	      redirect_uri: redirect_uri,
-	      state: state
-	    }));
+		  // your application requests authorization
+		  var scope = 'user-read-private user-read-email';
+		  // the service’s /authorize endpoint, passing to it the client ID, scopes, and redirect URI
+		  res.redirect('https://accounts.spotify.com/authorize?' +
+		    querystring.stringify({
+		      response_type: 'code',
+		      client_id: client_id,
+		      scope: scope,
+		      redirect_uri: redirect_uri,
+		      state: state,
+		      // force to approve app again, can be turned off after building
+		      show_dialog: true
+		    }));
+		}
 	});
 
 router.route('/callback')
@@ -52,7 +64,6 @@ router.route('/callback')
 
 	  // your application requests refresh and access tokens
 	  // after checking the state parameter
-
 	  var code = req.query.code || null;
 	  var state = req.query.state || null;
 	  var storedState = req.cookies ? req.cookies[stateKey] : null;
@@ -80,9 +91,10 @@ router.route('/callback')
 
 	    request.post(authOptions, function(error, response, body) {
 	      if (!error && response.statusCode === 200) {
-
 	        var access_token = body.access_token,
 	            refresh_token = body.refresh_token;
+
+	        console.log(body)
 
 	        var options = {
 	          url: 'https://api.spotify.com/v1/me',
@@ -92,15 +104,42 @@ router.route('/callback')
 
 	        // use the access token to access the Spotify Web API
 	        request.get(options, function(error, response, body) {
-	          console.log(body);
-	        });
 
-	        // we can also pass the token to the browser to make requests from there
-	        res.redirect('/#' +
-	          querystring.stringify({
-	            access_token: access_token,
-	            refresh_token: refresh_token
-	          }));
+	        	// update or create/insert
+	        	db.User.upsert({
+	        		spotify_id: 	body.id, 
+					access_token: 	access_token,
+					refresh_token: 	refresh_token,
+					display_name: 	body.display_name,
+					profile_image: 	body.images[0].url,
+					email: 			body.email,
+					uri: 			body.uri,
+					country: 		body.country
+	        	}).then(() => {
+	        		//because upsert can only return a boolean, find the logged in user
+	        		db.User.findOne({
+	        			where: {
+	        				spotify_id: body.id
+	        			}
+	        		})
+	        		.then((user) => {
+	        			if(!user){
+	        				res.redirect('/#loginfailed')
+	        			} else {
+		        			// start session and store user's spotify id
+			        		req.session.user = user.spotify_id;
+			        		// redirect to /
+			        		// res.redirect('/#' +
+					        //   querystring.stringify({
+					        //     access_token: access_token,
+					        //     refresh_token: refresh_token
+					        // }));
+					        console.log(body.images[0].url)
+					        res.render('index', {user:user})
+			        	}
+		        	})
+	        	})
+	         });
 	      } else {
 	        res.redirect('/#' +
 	          querystring.stringify({
