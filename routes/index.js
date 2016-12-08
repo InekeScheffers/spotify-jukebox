@@ -4,13 +4,18 @@ const router = express.Router()
 
 router.route('/')
 	.get((req, res) => {
-			res.render('index')
+			let user = req.session.user;
+			if(user){
+				res.render('index')
+			} else {
+				res.render('login')
+			}
 	})
 
 // redirect to root if someone goes to /index
 router.route('/index')
 	.get((req, res) => {
-		res.redirect('index')
+		res.redirect('/')
 	})
 
 // module.exports says: the current file when required will send back this thing

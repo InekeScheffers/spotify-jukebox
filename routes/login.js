@@ -33,26 +33,30 @@ var stateKey = 'spotify_auth_state';
 
 router.route('/login')
 	.get(function(req, res) {
-
 		// if al ingelogd(session) direct naar /
+		let user = req.session.user
+		if(user){
+			 res.redirect('/')
+		} else {
 		// else dit:
 
-	  var state = generateRandomString(16);
-	  res.cookie(stateKey, state);
+		  var state = generateRandomString(16);
+		  res.cookie(stateKey, state);
 
-	  // your application requests authorization
-	  var scope = 'user-read-private user-read-email';
-	  // the service’s /authorize endpoint, passing to it the client ID, scopes, and redirect URI
-	  res.redirect('https://accounts.spotify.com/authorize?' +
-	    querystring.stringify({
-	      response_type: 'code',
-	      client_id: client_id,
-	      scope: scope,
-	      redirect_uri: redirect_uri,
-	      state: state,
-	      // force to approve app again, can be turned off after building
-	      show_dialog: true
-	    }));
+		  // your application requests authorization
+		  var scope = 'user-read-private user-read-email';
+		  // the service’s /authorize endpoint, passing to it the client ID, scopes, and redirect URI
+		  res.redirect('https://accounts.spotify.com/authorize?' +
+		    querystring.stringify({
+		      response_type: 'code',
+		      client_id: client_id,
+		      scope: scope,
+		      redirect_uri: redirect_uri,
+		      state: state,
+		      // force to approve app again, can be turned off after building
+		      show_dialog: true
+		    }));
+		}
 	});
 
 router.route('/callback')
