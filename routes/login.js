@@ -104,38 +104,37 @@ router.route('/callback')
 
 	        // use the access token to access the Spotify Web API
 	        request.get(options, function(error, response, body) {
-	          	console.log(body);// naar client sturen, meesturen met redirect/render
-	          	// id, access token en refresh token in database opslaan
-	          	// create new user (row) in table users
-				db.User.create ({
-					spotify_id: 	body.id, 
+
+	        	// update or create/insert
+	        	db.User.upsert({
+	        		spotify_id: 	body.id, 
 					access_token: 	access_token,
-					// store hashed password 
 					refresh_token: 	refresh_token
-				}) // if user already exists, because spotify_id isn't unique in database
-				.catch( (err) => {
-					db.User.update({
-						access_token: 	access_token,
-						refresh_token: 	refresh_token
-					}, {
-						where: {
-							spotify_id: body.id
-						}
-					})
-				})
-				// when user is in database
-				.then( (user) => {
-					// start session, store spotify_id and redirect to index
-					req.session.user = user.spotify_id;
-					// we can also pass the token to the browser to make requests from there
-					// nu nog met access token in url, straks zonder!!!
-			        res.redirect('/#' +
-			          querystring.stringify({
-			            access_token: access_token,
-			            refresh_token: refresh_token
-			          }));
-						})
-	        });
+	        	}).then(() => {
+	        		//because upsert can only return a boolean, find the logged in user
+	        		db.User.findOne({
+	        			where: {
+	        				spotify_id: body.id
+	        			}
+	        		})
+	        		.then((user) => {
+	        			if(!user){
+	        				res.redirect('/#loginfailed')
+	        			} else {
+		        			// start session and store user's spotify id
+			        		req.session.user = user.spotify_id;
+			        		// redirect to /
+			        		// res.redirect('/#' +
+					        //   querystring.stringify({
+					        //     access_token: access_token,
+					        //     refresh_token: refresh_token
+					        // }));
+					        console.log(body.images[0].url)
+					        res.render('index', {user:body})
+			        	}
+		        	})
+	        	})
+	         });
 	      } else {
 	        res.redirect('/#' +
 	          querystring.stringify({
