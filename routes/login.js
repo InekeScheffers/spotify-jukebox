@@ -112,6 +112,16 @@ router.route('/callback')
 					access_token: 	access_token,
 					// store hashed password 
 					refresh_token: 	refresh_token
+				}) // if user already exists, because spotify_id isn't unique in database
+				.catch( (err) => {
+					db.User.update({
+						access_token: 	access_token,
+						refresh_token: 	refresh_token
+					}, {
+						where: {
+							spotify_id: body.id
+						}
+					})
 				})
 				// when user is in database
 				.then( (user) => {
