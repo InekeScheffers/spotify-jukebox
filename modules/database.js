@@ -23,6 +23,10 @@ let User = db.define('user', {
 		type: Sequelize.STRING,
 		allowNull: false
 	},
+	access_expires: {
+		type: Sequelize.STRING,
+		allowNull: false
+	},
 	display_name: {
 		type: Sequelize.STRING,
 		allowNull: false

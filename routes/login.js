@@ -89,9 +89,8 @@ router.route('/callback')
 	    request.post(authOptions, function(error, response, body) {
 	      if (!error && response.statusCode === 200) {
 	        var access_token = body.access_token,
-	            refresh_token = body.refresh_token;
-
-	        console.log(body)
+	            refresh_token = body.refresh_token,
+	            access_expires = Date.now() + (body.expires_in * 1000)
 
 	        var options = {
 	          url: 'https://api.spotify.com/v1/me',
@@ -107,6 +106,7 @@ router.route('/callback')
 	        		spotify_id: 	body.id, 
 					access_token: 	access_token,
 					refresh_token: 	refresh_token,
+					access_expires: access_expires,
 					display_name: 	body.display_name,
 					profile_image: 	body.images[0].url,
 					email: 			body.email,
@@ -125,13 +125,7 @@ router.route('/callback')
 	        			} else {
 		        			// start session and store user's spotify id
 			        		req.session.user = user.spotify_id;
-			        		// redirect to /
-			        		// res.redirect('/#' +
-					        //   querystring.stringify({
-					        //     access_token: access_token,
-					        //     refresh_token: refresh_token
-					        // }));
-					        console.log(body.images[0].url)
+			        		// render index, send user data to pug file
 					        res.render('index', {user:user})
 			        	}
 		        	})
