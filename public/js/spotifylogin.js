@@ -1,5 +1,4 @@
 module.exports = $(document).ready( () => {
-        console.log("triggered")
         /**
          * Obtains parameters from the hash of the URL
          * @return Object

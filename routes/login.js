@@ -69,10 +69,7 @@ router.route('/callback')
 	  var storedState = req.cookies ? req.cookies[stateKey] : null;
 
 	  if (state === null || state !== storedState) {
-	    res.redirect('/#' +
-	      querystring.stringify({
-	        error: 'state_mismatch'
-	      }));
+	    res.redirect('/?message=' + encodeURIComponent("Oops, something went wrong. Try again."));
 	  } else {
 	    res.clearCookie(stateKey);
 	    var authOptions = {
@@ -124,7 +121,7 @@ router.route('/callback')
 	        		})
 	        		.then((user) => {
 	        			if(!user){
-	        				res.redirect('/#loginfailed')
+	        				res.redirect('/?message=' + encodeURIComponent("Oops, something went wrong. Try again."))
 	        			} else {
 		        			// start session and store user's spotify id
 			        		req.session.user = user.spotify_id;
@@ -141,10 +138,8 @@ router.route('/callback')
 	        	})
 	         });
 	      } else {
-	        res.redirect('/#' +
-	          querystring.stringify({
-	            error: 'invalid_token'
-	          }));
+	      	// invalid token
+	        res.redirect('/?message=' + encodeURIComponent("Oops, something went wrong. Try again."));
 	      }
 	    });
 	  }

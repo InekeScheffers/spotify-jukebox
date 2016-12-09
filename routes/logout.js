@@ -20,7 +20,7 @@ router.route('/logout')
 							throw err;
 						}
 						// redirect to log in page and show message
-						res.redirect('/');
+						res.redirect('/?message=' + encodeURIComponent("Successfully ended jukebox!"));
 					})
 				})
 			} else {

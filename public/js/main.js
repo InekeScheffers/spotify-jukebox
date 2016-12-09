@@ -3,4 +3,4 @@
 // setTimeout(() => alert(`Hello there from ${name}`), 300);
 
 // require script
-require( './spotifylogin' )
+// require( './spotifylogin' )
