@@ -16,11 +16,11 @@ let User = db.define('user', {
 		allowNull: false
 	},
 	access_token: {
-		type: Sequelize.STRING,
+		type: Sequelize.STRING(500),
 		allowNull: false
 	},
 	refresh_token: {
-		type: Sequelize.STRING,
+		type: Sequelize.STRING(500),
 		allowNull: false
 	},
 	access_expires: {
@@ -50,9 +50,9 @@ let User = db.define('user', {
 })
 
 // for when I'm not deleting users yet, can be set to sync when log out and expired session delete user
-//db.sync({force:true})
+db.sync({force:true})
 
-db.sync()
+//db.sync()
 
 // by requiring database.js the code runs one time, by sending User in an object you can access and create a user in routes
 // for example: db.User.create
