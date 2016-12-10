@@ -28,8 +28,11 @@ router.route('/add-track')
 			console.log(options);
 
 			request.post(options, (error, response, body) => {
-				console.log(body);
-				res.send('track added');
+				if (!error && response.statusCode === 201) {
+					res.send('Track added');
+				} else {
+					res.send('Oops, try again.')
+				}
 			});
 		})
 	})
