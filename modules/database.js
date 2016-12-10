@@ -46,6 +46,10 @@ let User = db.define('user', {
 	country: {
 		type: Sequelize.STRING,
 		allowNull: false
+	},
+	jukebox_playlist: {
+		type: Sequelize.STRING,
+		allowNull: true
 	}
 })
 
