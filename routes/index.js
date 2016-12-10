@@ -37,8 +37,8 @@ router.route('/')
 				        			id: playlist.id
 				        		};
 				        	});
+				        	res.render('index', {user: user, playlist_dropdown: playlist_dropdown})
 				        })
-	        			res.render('index', {user: user, playlist_dropdown: playlist_dropdown})
 	        		})
 			} else {
 				res.render('login', {message: req.query.message})
