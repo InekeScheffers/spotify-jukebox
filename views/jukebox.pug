@@ -6,7 +6,12 @@ html
 			//- deleted #loggedin
 			div
 				div#player
-					iframe(src="" + jukebox_url width="1000" height="300" frameborder="0" allowtransparency="true")
+					iframe(src="" + jukebox_url width="1000" height="300" frameborder="0" allowtransparency="true"
+					id="spotify_player")
+			
+					input(id ="track_id" name="track_id" value="7r8Yc8CBLuk18OJ89u5ou8")
+					button.btn.btn-primary#add-track Add track
 				a.btn.btn-primary(href="/logout") End jukebox
 
 		include includes/footer.pug
+		script(type='text/javascript' src='/js/add-track.js')

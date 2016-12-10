@@ -35,6 +35,7 @@ const loginRouter = require(__dirname + '/routes/login')
 const logoutRouter = require(__dirname + '/routes/logout')
 const selectPlaylistRouter = require(__dirname + '/routes/select-playlist')
 const jukeboxRouter = require(__dirname + '/routes/jukebox')
+const addTrackRouter = require(__dirname + '/routes/add-track')
 
 // use routes
 app.use('/', indexRouter)
@@ -42,5 +43,6 @@ app.use('/', loginRouter)
 app.use('/', logoutRouter)
 app.use('/', selectPlaylistRouter)
 app.use('/', jukeboxRouter)
+app.use('/', addTrackRouter)
 
 app.listen(8000)
