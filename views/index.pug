@@ -6,7 +6,7 @@ html
 			//- deleted #loggedin
 			div
 				div#user-profile
-					h1 #{user.display_name}
+					h1 Logged in as #{user.display_name}
 					div.media
 						div.pull-left
 							img.media-object(width='150', src="" + user.profile_image)
@@ -22,8 +22,16 @@ html
 									dd #{user.uri}
 								dt Country
 									dd #{user.country}
+								dt Jukebox id
+									dd #{user.jukebox_playlist}
 				//- div#oauth
 				//- button.btn.btn-default#obtain-new-token Obtain new token using the refresh token
 				a.btn.btn-primary(href="/logout") End jukebox
+				div#playlist-dropdown
+					form#choose-form(action='/select-playlist' method='POST')
+						select(name='playlist_id')
+							each item in playlist_dropdown
+								option(value=item.id)= item.name
+						button(type="submit") Choose a playlist
 
 		include includes/footer.pug
