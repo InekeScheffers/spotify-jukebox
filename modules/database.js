@@ -9,7 +9,7 @@ let db = new Sequelize('spotifyjukebox', process.env.POSTGRES_USER, process.env.
 
 // create model for users
 let User = db.define('user', {
-	// say name has to be unique in this table for login purposes
+	// say spotify_id has to be unique in this table so every user has at most one row in the table
 	spotify_id: {
 		type: Sequelize.STRING,
 		unique: true,
@@ -47,14 +47,14 @@ let User = db.define('user', {
 		type: Sequelize.STRING,
 		allowNull: false
 	},
-	jukebox_playlist: {
+	jukebox_playlistid: {
 		type: Sequelize.STRING,
 		allowNull: true
 	}
 })
 
 // for when I'm not deleting users yet, can be set to sync when log out and expired session delete user
-// db.sync({force:true})
+//db.sync({force:true})
 
 db.sync()
 

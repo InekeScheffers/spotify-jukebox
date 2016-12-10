@@ -3,7 +3,6 @@ html
 
 	body
 		div.container
-			//- deleted #loggedin
 			div
 				div#user-profile
 					h1 Logged in as #{user.display_name}
@@ -23,11 +22,13 @@ html
 								dt Country
 									dd #{user.country}
 								dt Jukebox id
-									dd #{user.jukebox_playlist}
+									dd #{user.jukebox_playlistid}
 				div#playlist-dropdown
 					form#choose-form(action='/select-playlist' method='POST')
 						select(name='playlist_id')
+							//- loop through all playlists stored in object playlist_dropdown sent from index.js
 							each item in playlist_dropdown
+								//- value is playlist_id, shown in dropdown is name of playlist
 								option(value=item.id)= item.name
 						button(type="submit") Choose a playlist
 

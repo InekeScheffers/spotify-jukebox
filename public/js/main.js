@@ -1,6 +1,2 @@
-// test webpack, should alert after 3 sec on index
-// const name = 'Scotch.io';
-// setTimeout(() => alert(`Hello there from ${name}`), 300);
-
-// require script
-// require( './spotifylogin' )
+// require custom script, to be compiled with webpack
+require( './add-track.js' );
