@@ -1,0 +1,12 @@
+html
+	include includes/header.pug
+
+	body
+		div.container
+			//- deleted #loggedin
+			div
+				div#player
+					iframe(src="" + jukebox_url width="1000" height="300" frameborder="0" allowtransparency="true")
+				a.btn.btn-primary(href="/logout") End jukebox
+
+		include includes/footer.pug
