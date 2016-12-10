@@ -54,7 +54,7 @@ router.route('/login')
 		      redirect_uri: redirect_uri,
 		      state: state,
 		      // force to approve app again, can be turned off after building
-		      show_dialog: true
+		      //show_dialog: true
 		    }));
 		}
 	});
@@ -125,8 +125,8 @@ router.route('/callback')
 	        			} else {
 		        			// start session and store user's spotify id
 			        		req.session.user = user.spotify_id;
-			        		// render index, send user data to pug file
-					        res.render('index', {user:user})
+			        		// render index
+					        res.redirect('/')
 			        	}
 		        	})
 	        	})
@@ -139,6 +139,8 @@ router.route('/callback')
 	  }
 	});
 
+// get this route automatically when access token is expired, check before each api call using access token
+// catch when route is requested without sending the refresh token -> redirect to /
 router.route('/refresh_token')
 	.get(function(req, res) {
 
