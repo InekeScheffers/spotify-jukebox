@@ -16,7 +16,7 @@ router.route('/select-playlist')
 			}
 		}
 		);
-		res.redirect('/')
+		res.redirect('/jukebox')
 	})
 
 // module.exports says: the current file when required will send back this thing
