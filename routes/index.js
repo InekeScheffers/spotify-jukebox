@@ -4,11 +4,17 @@ const request = require('request');
 // create a router
 const router = express.Router();
 
+const test = require(__dirname + '/../modules/spotify-access-token');
+
 // require database.js module
 let db = require(__dirname + '/../modules/database');
 
 router.route('/')
 	.get((req, res) => {
+
+		test.then((data) => {
+			console.log(data);
+		});
 
 		let user = req.session.user;
 
