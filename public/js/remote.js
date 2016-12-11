@@ -7,9 +7,14 @@ if($('#remote').length > 0) {
 
 		// ajax post to add-track, so page isn't reloaded, but track is added
 		// data is the callback, so what's send back after success from add-track.js on server
-		$.post("/add-track", {track_id: track_id}, (data) => {
-			// logs if track is added, or it went wrong
-			console.log(data);
+		$.post(window.location.href, {track_id: track_id}, (data) => {
+			// if jukebox doesn't exist anymore in database, gets redirect, then sets window.location.href to / + message
+			if(data.redirect) {
+				window.location.href = data.redirect; 
+			} else {
+				// logs if track is added or not
+				console.log(data.message);
+			}			
 		});
 	});
 };

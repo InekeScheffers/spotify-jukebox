@@ -33,30 +33,35 @@ router.route('/add-track/:user_id')
 		// find user to have access to access_tocken, spotify_id and jukebox_playlistid
 		db.User.findOne({
 			where: {
-				spotify_id: req.session.user
+				// remote is not in the session, get's user id from express params in url
+				spotify_id: req.params.user_id
 			}
 		})
 		.then( (user) => {
-			// store options for post request to spotify api
-			let options = {
-				url: `https://api.spotify.com/v1/users/${user.spotify_id}/playlists/${user.jukebox_playlistid}/tracks`,
-				headers: { 'Authorization': 'Bearer ' + user.access_token },
-				body: {
-					"uris": [`spotify:track:${track_id}`]
-				},
-				json: true
-			};
+			if(user) {
+				// store options for post request to spotify api
+				let options = {
+					url: `https://api.spotify.com/v1/users/${user.spotify_id}/playlists/${user.jukebox_playlistid}/tracks`,
+					headers: { 'Authorization': 'Bearer ' + user.access_token },
+					body: {
+						"uris": [`spotify:track:${track_id}`]
+					},
+					json: true
+				};
 
-			// post track to playlist via spotify api call
-			request.post(options, (error, response, body) => {
-				// if success
-				if (!error && response.statusCode === 201) {
-					// send to public/add-track.js
-					res.send('Track added');
-				} else {
-					res.send('Oops, try again.');
-				}
-			});
+				// post track to playlist via spotify api call
+				request.post(options, (error, response, body) => {
+					// if success
+					if (!error && response.statusCode === 201) {
+						// send to public/add-track.js
+						res.send({message: 'Track added'});
+					} else {
+						res.send({message: 'Oops try again'});
+					}
+				});
+			} else {
+				res.send({redirect: '/?message=' + encodeURIComponent("Oops, this jukebox is no more. Please log in to start your own.")});
+			}
 		});
 	});
 
