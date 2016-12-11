@@ -17,4 +17,49 @@ if($('#remote').length > 0) {
 			}			
 		});
 	});
+
+	// function to delay calls to the api
+	const delay = (() => {
+		let timer = 0;
+		return (callback, ms) =>{
+		clearTimeout (timer);
+		timer = setTimeout(callback, ms);
+	  };
+	})();	
+
+	//autocomplete search user, listening to when there's a keyup in input field
+	$( "#search" ).on('keyup', function (event) {
+		//test if you can console.log the whole string in the input field
+		//console.log(event.target.value)
+
+		// call function delay, with delay of 500 milliseconds.. so checks when user's last keyup was 500 ms ago
+		// so only does api call when user pauses/finishes search query
+		delay(() => {
+			let inputSearch = event.target.value;
+
+			// if field is not empty
+			if(inputSearch != '') {
+				// the callback gets its data from spotify api
+				$.get(`https://api.spotify.com/v1/search?q=${inputSearch}&type=track`, (data) => {
+					console.log(data)
+					// if there are tracks
+					if(data.tracks.items.length > 0){
+						// first set datalist with #results to empty again when request is made so it's not just appended and added to last result
+						$('#results').empty();
+						// loop through result
+						for (let i = 0; i < data.tracks.items.length; i++) {
+							//let artist = data.tracks.items[i].artists;
+							// store path to track		  					
+							let track = data.tracks.items[i];
+							// append track id + name to list #results
+							$('#results').append('<li>' + track.id + " " + track.name + '</li>')
+						}
+					}
+				});
+			} else {
+				// when input field is empty, empty results
+  				$('#results').empty();
+			}
+		}, 500);
+	});
 };
