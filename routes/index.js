@@ -4,17 +4,13 @@ const request = require('request');
 // create a router
 const router = express.Router();
 
-const test = require(__dirname + '/../modules/spotify-access-token');
+const spotifyAccessToken = require(__dirname + '/../modules/spotify-access-token');
 
 // require database.js module
 let db = require(__dirname + '/../modules/database');
 
 router.route('/')
 	.get((req, res) => {
-
-		test.then((data) => {
-			console.log(data);
-		});
 
 		let user = req.session.user;
 
@@ -25,30 +21,30 @@ router.route('/')
 				}
 			})
 			.then((user) => {
+				spotifyAccessToken.getValidToken(req.session.user).then((accessToken) => {
+					let user_id = user.spotify_id;
 
-				let user_id = user.spotify_id;
+					let options = {
+						url: `https://api.spotify.com/v1/users/${user_id}/playlists`,
+						headers: { 'Authorization': `Bearer ${accessToken}` },
+						json: true
+					};
 
-				let options = {
-					url: `https://api.spotify.com/v1/users/${user_id}/playlists`,
-					headers: { 'Authorization': `Bearer ${user.access_token}` },
-					json: true
-				};
+					// use the access token to access the Spotify Web API
+					request.get(options, (error, response, body) => {
 
-				// use the access token to access the Spotify Web API
-				request.get(options, (error, response, body) => {
+						let user_playlists = body.items.filter((item) => {
+							return item.owner.id == user_id;
+						});
 
-					let user_playlists = body.items.filter((item) => {
-						return item.owner.id == user_id;
+						let playlist_dropdown = user_playlists.map((playlist) => {
+							return {
+								name: playlist.name,
+								id: playlist.id
+							};
+						});
+						res.render('index', {user: user, playlist_dropdown: playlist_dropdown});
 					});
-
-					let playlist_dropdown = user_playlists.map((playlist) => {
-						return {
-							name: playlist.name,
-							id: playlist.id
-						};
-					});
-
-					res.render('index', {user: user, playlist_dropdown: playlist_dropdown});
 				});
 			});
 		} else {
