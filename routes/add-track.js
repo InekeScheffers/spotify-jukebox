@@ -2,11 +2,13 @@ const express = require('express');
 // to make http calls:
 const request = require('request');
 
+const spotifyAccessToken = require(__dirname + '/../modules/spotify-access-token');
+
 // create a router
 const router = express.Router();
 
 // require database.js module
-let db = require(__dirname + '/../modules/database');
+const db = require(__dirname + '/../modules/database');
 
 //:user_id is req.params in express
 router.route('/add-track/:user_id')
@@ -39,26 +41,33 @@ router.route('/add-track/:user_id')
 		})
 		.then( (user) => {
 			if(user) {
-				// store options for post request to spotify api
-				let options = {
-					url: `https://api.spotify.com/v1/users/${user.spotify_id}/playlists/${user.jukebox_playlistid}/tracks`,
-					headers: { 'Authorization': 'Bearer ' + user.access_token },
-					body: {
-						"uris": [`spotify:track:${track_id}`]
-					},
-					json: true
-				};
+				// give user.spotify_id (spotify_id) to getValidToken function, to check if access token is still valid
+				// because if it's not we can't get the playlists for this user, without refreshing it				
+				spotifyAccessToken.getValidToken(user.spotify_id)
+					// when it's checked and we got back the valid token (old or new)
+					// add track to playlist with this token
+					.then((accessToken) => {
+						// store options for post request to spotify api
+						let options = {
+							url: `https://api.spotify.com/v1/users/${user.spotify_id}/playlists/${user.jukebox_playlistid}/tracks`,
+							headers: { 'Authorization': 'Bearer ' + user.access_token },
+							body: {
+								"uris": [`spotify:track:${track_id}`]
+							},
+							json: true
+						};
 
-				// post track to playlist via spotify api call
-				request.post(options, (error, response, body) => {
-					// if success
-					if (!error && response.statusCode === 201) {
-						// send to public/add-track.js
-						res.send({message: 'Track added'});
-					} else {
-						res.send({message: 'Oops try again', error: error, responsestatusCode: response.statusCode});
-					}
-				});
+						// post track to playlist via spotify api call
+						request.post(options, (error, response, body) => {
+							// if success
+							if (!error && response.statusCode === 201) {
+								// send to public/add-track.js
+								res.send({message: 'Track added'});
+							} else {
+								res.send({message: 'Oops try again', error: error, responsestatusCode: response.statusCode});
+							}
+						});
+					});
 			} else {
 				res.send({redirect: '/?message=' + encodeURIComponent("Oops, this jukebox is no more. Please log in to start your own.")});
 			}

@@ -10,7 +10,7 @@ const querystring = require('querystring');
 const dotenv = require('dotenv').config();
 
 // require database.js module
-let db = require(__dirname + '/../modules/database');
+const db = require(__dirname + '/../modules/database');
 
 // create a router
 const router = express.Router();
@@ -92,7 +92,10 @@ router.route('/callback')
 				if (!error && response.statusCode === 200) {
 					let access_token = body.access_token,
 						refresh_token = body.refresh_token,
-						access_expires = Date.now() + (body.expires_in * 1000);
+						// expires_in = 3600 seconds
+						// so access token expires at: the time now (ms) + expires_in (sec), so * 1000
+						// to be safe extract 300 (sec) = 5 min
+						access_expires = Date.now() + ((body.expires_in - 300) * 1000);
 
 					let options = {
 						// url to get user profile data
@@ -143,34 +146,6 @@ router.route('/callback')
 			});
 		}
 	});
-
-// get this route automatically when access token is expired, check before each api call using access token
-// catch when route is requested without sending the refresh token -> redirect to /
-// router.route('/refresh_token')
-// 	.get((req, res) => {
-
-// 	// requesting access token from refresh token
-// 	var refresh_token = req.query.refresh_token;
-// 	var authOptions = {
-// 		// a refresh token is sent to /api/token. This will generate a new access token that we can issue when the previous has expired.
-// 		url: 'https://accounts.spotify.com/api/token',
-// 		headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
-// 		form: {
-// 			grant_type: 'refresh_token',
-// 			refresh_token: refresh_token
-// 		},
-// 		json: true
-// 	};
-
-// 	request.post(authOptions, (error, response, body) => {
-// 		if (!error && response.statusCode === 200) {
-// 			let access_token = body.access_token;
-// 			res.send({
-// 				'access_token': access_token
-// 			});
-// 		}
-// 	});
-// });
 
 // module.exports says: the current file when required will send back this thing
 // router refers to variable router = object with all router-routes in it
