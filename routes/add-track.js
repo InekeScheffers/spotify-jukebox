@@ -8,7 +8,24 @@ const router = express.Router();
 // require database.js module
 let db = require(__dirname + '/../modules/database');
 
-router.route('/add-track')
+//:user_id is req.params in express
+router.route('/add-track/:user_id')
+	.get((req, res) => {
+		//console.log(req.params);
+		db.User.findOne({
+			where: {
+				spotify_id: req.params.user_id
+			}
+		})
+		.then((user) => {
+			if(user){
+				// render remote.pug when there's a user with this id in the database
+				res.render('remote', {user_name: user.display_name});
+			} else {
+				res.redirect('/?message=' + encodeURIComponent("Oops, this jukebox is no more. Please log in to start your own."));
+			}
+		})
+	})
 	.post((req, res) => {
 		// store track_id sent from public/add-track.js
 		const track_id = req.body.track_id;

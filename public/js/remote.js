@@ -1,5 +1,5 @@
 //when on page with #jukebox on body, so it only triggers on jukebox page not others
-if($('#jukebox').length > 0) {
+if($('#remote').length > 0) {
 	// run this when button with id add-track is clicked
 	$('#add-track').on( "click", () => {
 		// store track_id in var, track_id is value in input field with id track_id
@@ -12,17 +12,4 @@ if($('#jukebox').length > 0) {
 			console.log(data);
 		});
 	});
-
-	// recursive function, calls itself
-	const reloadIframe = () => {
-		setTimeout(() => {
-			// resets src so player is reloaded and you see added track, without reloading the page
-			$('#spotify_player').attr("src", $('#spotify_player').attr("src"));
-			reloadIframe();
-			// every 10 secs
-		}, 10000);
-	};
-
-	// first time call reloadIframe when document is ready
-	reloadIframe();
 };

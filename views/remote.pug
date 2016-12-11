@@ -1,0 +1,12 @@
+html
+	include includes/header.pug
+
+	body#remote
+		div.container
+			div
+				div#search-and-add
+					//- input field with static data for now to add a track
+					input(id ="track_id" name="track_id" value="7r8Yc8CBLuk18OJ89u5ou8")
+					button.btn.btn-primary#add-track Add track
+
+		include includes/footer.pug
