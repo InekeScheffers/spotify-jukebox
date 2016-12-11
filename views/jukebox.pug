@@ -9,9 +9,17 @@ html
 					id="spotify_player")
 
 					//- input field with static data for now to add a track
-					input(id ="track_id" name="track_id" value="7r8Yc8CBLuk18OJ89u5ou8")
-					button.btn.btn-primary#add-track Add track
+					//- input(id ="track_id" name="track_id" value="7r8Yc8CBLuk18OJ89u5ou8")
+					//- button.btn.btn-primary#add-track Add track
 				//- destroys session and deletes user from database, route: logout.js
-				a.btn.btn-primary(href="/logout") End jukebox
+				div#logout
+					a.btn.btn-primary(href="/logout") End jukebox
+				div#remote-url
+					h2 Put another dime in the jukebox, baby
+					h4 Follow this link on you device to add a track to this jukebox
+					a(href="/add-track/" + user_id) 
+						span#origin 
+						span /add-track/#{user_id}
+
 
 		include includes/footer.pug

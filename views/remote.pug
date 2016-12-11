@@ -1,0 +1,13 @@
+html
+	include includes/header.pug
+
+	body#remote
+		div.container
+			div#search-and-add
+				h2 Add track to jukebox
+				//- search bar
+				input#search(type ='text', placeholder ='search for track' name ='search' autocomplete="off" list="results")
+				//- show results in list
+				ul#results(style="list-style-type:none")
+
+		include includes/footer.pug
