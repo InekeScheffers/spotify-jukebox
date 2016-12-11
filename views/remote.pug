@@ -3,16 +3,11 @@ html
 
 	body#remote
 		div.container
-			div
-				div#search-and-add
-					//- input field with static data for now to add a track
-					input(id ="track_id" name="track_id" value="7r8Yc8CBLuk18OJ89u5ou8")
-					button.btn.btn-primary#add-track Add track
-
-			h2 Search track
-			//- search bar
-			input#search(type ='text', placeholder ='search for track' name ='search' autocomplete="off" list="results")
-			//- show results in list
-			ul#results
+			div#search-and-add
+				h2 Add track to jukebox
+				//- search bar
+				input#search(type ='text', placeholder ='search for track' name ='search' autocomplete="off" list="results")
+				//- show results in list
+				ul#results(style="list-style-type:none")
 
 		include includes/footer.pug

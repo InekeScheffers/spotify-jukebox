@@ -56,7 +56,7 @@ router.route('/add-track/:user_id')
 						// send to public/add-track.js
 						res.send({message: 'Track added'});
 					} else {
-						res.send({message: 'Oops try again'});
+						res.send({message: 'Oops try again', error: error, responsestatusCode: response.statusCode});
 					}
 				});
 			} else {

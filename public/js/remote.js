@@ -1,23 +1,6 @@
 //when on page with #jukebox on body, so it only triggers on jukebox page not others
 if($('#remote').length > 0) {
-	// run this when button with id add-track is clicked
-	$('#add-track').on( "click", () => {
-		// store track_id in var, track_id is value in input field with id track_id
-		let track_id = $('#track_id').val();
-
-		// ajax post to add-track, so page isn't reloaded, but track is added
-		// data is the callback, so what's send back after success from add-track.js on server
-		$.post(window.location.href, {track_id: track_id}, (data) => {
-			// if jukebox doesn't exist anymore in database, gets redirect, then sets window.location.href to / + message
-			if(data.redirect) {
-				window.location.href = data.redirect; 
-			} else {
-				// logs if track is added or not
-				console.log(data.message);
-			}			
-		});
-	});
-
+	
 	// function to delay calls to the api
 	const delay = (() => {
 		let timer = 0;
@@ -28,7 +11,7 @@ if($('#remote').length > 0) {
 	})();	
 
 	//autocomplete search user, listening to when there's a keyup in input field
-	$( "#search" ).on('keyup', function (event) {
+	$( "#search" ).on('keyup', (event) => {
 		//test if you can console.log the whole string in the input field
 		//console.log(event.target.value)
 
@@ -48,11 +31,14 @@ if($('#remote').length > 0) {
 						$('#results').empty();
 						// loop through result
 						for (let i = 0; i < data.tracks.items.length; i++) {
-							//let artist = data.tracks.items[i].artists;
+							// store path to artist
+							let artist = data.tracks.items[i].artists[0];
 							// store path to track		  					
 							let track = data.tracks.items[i];
+							// store path to album
+							let album = data.tracks.items[i].album;
 							// append track id + name to list #results
-							$('#results').append('<li>' + track.id + " " + track.name + '</li>')
+							$('#results').append(`<li><button data-trackId=${track.id} class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button> ${artist.name} - ${track.name} - ${album.name}</li>`)
 						}
 					}
 				});
@@ -62,4 +48,34 @@ if($('#remote').length > 0) {
 			}
 		}, 500);
 	});
+
+	// in es6 arrow function this refers to the outer scope 
+	// so in this case we need the es5 function
+	// listen to on click of add button, then add track via ajax post request
+	$("#results").on('click', 'button', function() {
+		//console.log($(this).attr('data-trackId'));
+
+		// store track_id in var, track_id is value in input field with id track_id
+		let track_id = $(this).attr('data-trackId');
+
+		// ajax post to add-track, so page isn't reloaded, but track is added
+		// data is the callback, so what's send back after success from add-track.js on server
+		$.post(window.location.href, {track_id: track_id}, (data) => {
+			// if jukebox doesn't exist anymore in database, gets redirect, then sets window.location.href to / + message
+			if(data.redirect) {
+				window.location.href = data.redirect; 
+			} else {
+				// logs if track is added or not
+				console.log(data);
+			}			
+		});
+	});
+
+
+
+
+
+
+
+
 };
