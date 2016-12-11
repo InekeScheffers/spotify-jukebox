@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 // require database.js module
-let db = require(__dirname + '/../modules/database');
+const db = require(__dirname + '/../modules/database');
 
 router.route('/select-playlist')
 	.post((req, res) => {

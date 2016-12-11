@@ -10,7 +10,7 @@ const querystring = require('querystring');
 const dotenv = require('dotenv').config();
 
 // require database.js module
-let db = require(__dirname + '/../modules/database');
+const db = require(__dirname + '/../modules/database');
 
 // create a router
 const router = express.Router();
@@ -92,7 +92,10 @@ router.route('/callback')
 				if (!error && response.statusCode === 200) {
 					let access_token = body.access_token,
 						refresh_token = body.refresh_token,
-						access_expires = Date.now() + (body.expires_in * 1000);
+						// expires_in = 3600 seconds
+						// so access token expires at: the time now (ms) + expires_in (sec), so * 1000
+						// to be safe extract 300 (sec) = 5 min
+						access_expires = Date.now() + ((body.expires_in - 300) * 1000);
 
 					let options = {
 						// url to get user profile data

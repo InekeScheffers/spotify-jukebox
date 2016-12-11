@@ -8,7 +8,7 @@ const spotifyAccessToken = require(__dirname + '/../modules/spotify-access-token
 const router = express.Router();
 
 // require database.js module
-let db = require(__dirname + '/../modules/database');
+const db = require(__dirname + '/../modules/database');
 
 //:user_id is req.params in express
 router.route('/add-track/:user_id')
@@ -40,8 +40,12 @@ router.route('/add-track/:user_id')
 			}
 		})
 		.then( (user) => {
-			if(user) {				
+			if(user) {
+				// give user.spotify_id (spotify_id) to getValidToken function, to check if access token is still valid
+				// because if it's not we can't get the playlists for this user, without refreshing it				
 				spotifyAccessToken.getValidToken(user.spotify_id)
+					// when it's checked and we got back the valid token (old or new)
+					// add track to playlist with this token
 					.then((accessToken) => {
 						// store options for post request to spotify api
 						let options = {
