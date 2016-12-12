@@ -19,6 +19,9 @@ router.route('/select-playlist')
 		);
 		res.redirect('/jukebox');
 	})
+	.get((req, res) => {
+		res.redirect('/');
+	});
 
 // module.exports says: the current file when required will send back this thing
 // router refers to variable router = object with all router-routes in it
