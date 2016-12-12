@@ -5,27 +5,23 @@ const router = express.Router();
 // require database.js module
 const db = require(__dirname + '/../modules/database');
 
-router.route('/logout')
+router.route('/end-jukebox')
 	.get((req, res) => {
 			let user = req.session.user;
 
 			if(user){
-				db.User.destroy({
+				db.User.update({
+					// remove playlistid so remote can't endlessly keep adding tracks when you close your jukebox
+					jukebox_playlistid: null
+				}, {
 					where: {
-						spotify_id: req.session.user
+						spotify_id: user
 					}
-				})
-				.then( () => {
-					req.session.destroy( (err) => {
-						if(err) {
-							throw err;
-						}
-						console.log('logged out via unload')
-						// redirect to log in page and show message
-						res.redirect('/?message=' + encodeURIComponent("Successfully ended jukebox!"));
-					})
-				})
+				});
+				// redirects to your user profile where you can start a jukebox again
+				res.redirect('/');
 			} else {
+				// redirects to root and lets you login
 				res.redirect('/');
 			}
 	});
