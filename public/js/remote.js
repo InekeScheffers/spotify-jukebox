@@ -66,7 +66,9 @@ if($('#remote').length > 0) {
 				window.location.href = data.redirect; 
 			} else {
 				// logs if track is added or not
-				console.log(data);
+				// console.log(data);
+				// shows message if it's added or not
+				$('#track-message').append(data.message)
 			}			
 		});
 	});
