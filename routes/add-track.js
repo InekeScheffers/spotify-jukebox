@@ -40,7 +40,7 @@ router.route('/add-track/:user_id')
 			}
 		})
 		.then( (user) => {
-			if(user) {
+			if(user && user.jukebox_playlistid) {
 				// give user.spotify_id (spotify_id) to getValidToken function, to check if access token is still valid
 				// because if it's not we can't get the playlists for this user, without refreshing it				
 				spotifyAccessToken.getValidToken(user.spotify_id)
@@ -62,7 +62,7 @@ router.route('/add-track/:user_id')
 							// if success
 							if (!error && response.statusCode === 201) {
 								// send to public/add-track.js
-								res.send({message: 'Track added'});
+								res.send({message: 'Track added, your track will appear in the jukebox shortly'});
 							} else {
 								res.send({message: 'Oops try again', error: error, responsestatusCode: response.statusCode});
 							}
