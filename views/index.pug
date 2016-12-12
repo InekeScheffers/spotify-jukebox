@@ -31,5 +31,11 @@ html
 								//- value is playlist_id, shown in dropdown is name of playlist
 								option(value=item.id)= item.name
 						button(type="submit") Choose a playlist
+				div
+					h4 or
+				div#create-playlist
+					form#create-form(action='/create-playlist' method='POST')
+						input(name='playlist' placeholder='Name your new playlist')
+						button(type="submit") Create a playlist
 
 		include includes/footer.pug
