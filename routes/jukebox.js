@@ -16,8 +16,13 @@ router.route('/jukebox')
 						spotify_id: user
 					}
 				}).then((user) => {
-					// render jukebox.pug and send url of selected playlist
-					res.render('jukebox', {user_id: user.spotify_id, jukebox_url: `https://embed.spotify.com/?uri=spotify:user:${user.spotify_id}:playlist:${user.jukebox_playlistid}`});
+					// if there is a playlist chosen, otherwise redirect to '/' to choose one
+					if(user.jukebox_playlistid) {
+						// render jukebox.pug and send url of selected playlist
+						res.render('jukebox', {user_id: user.spotify_id, user_name: user.display_name, jukebox_url: `https://embed.spotify.com/?uri=spotify:user:${user.spotify_id}:playlist:${user.jukebox_playlistid}`});
+					} else {
+						res.redirect('/');
+					}
 				})
 		} else {
 			res.redirect('/');

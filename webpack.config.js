@@ -32,7 +32,7 @@ const config = {
 	},
 	// transpile css to support last 2 versions of all browsers.
 	postcss: [
-		autoprefixer( { browsers: ['last 2 versions'] } );
+		autoprefixer( { browsers: ['last 2 versions'] } )
 	]
 
 }

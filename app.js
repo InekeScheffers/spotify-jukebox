@@ -39,6 +39,7 @@ const logoutRouter = require(__dirname + '/routes/logout');
 const selectPlaylistRouter = require(__dirname + '/routes/select-playlist');
 const jukeboxRouter = require(__dirname + '/routes/jukebox');
 const addTrackRouter = require(__dirname + '/routes/add-track');
+const endJukeboxRouter = require(__dirname + '/routes/end-jukebox');
 
 // use routes
 app.use('/', indexRouter);
@@ -47,6 +48,7 @@ app.use('/', logoutRouter);
 app.use('/', selectPlaylistRouter);
 app.use('/', jukeboxRouter);
 app.use('/', addTrackRouter);
+app.use('/', endJukeboxRouter);
 
 // set port where app listens
 app.listen(8000);

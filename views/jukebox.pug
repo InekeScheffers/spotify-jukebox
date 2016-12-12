@@ -4,6 +4,8 @@ html
 	body#jukebox
 		div.container
 			div
+				div#owner-jukebox
+					h2 Welcome to the jukebox of #{user_name}
 				div#player
 					iframe(src="" + jukebox_url width="1000" height="300" frameborder="0" allowtransparency="true"
 					id="spotify_player")
@@ -16,7 +18,7 @@ html
 					a.btn.btn-primary(href="/logout") End jukebox
 				div#remote-url
 					h2 Put another dime in the jukebox, baby
-					h4 Follow this link on you device to add a track to this jukebox
+					h4 Follow this link on your device to add a track to this jukebox
 					a(href="/add-track/" + user_id target="_blank") 
 						span#origin 
 						span /add-track/#{user_id}
