@@ -40,6 +40,7 @@ router.route('/add-track/:user_id')
 			}
 		})
 		.then( (user) => {
+			// if the user exists AND the playlist still exists
 			if(user && user.jukebox_playlistid) {
 				// give user.spotify_id (spotify_id) to getValidToken function, to check if access token is still valid
 				// because if it's not we can't get the playlists for this user, without refreshing it				

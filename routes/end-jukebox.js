@@ -11,16 +11,17 @@ router.route('/end-jukebox')
 
 			if(user){
 				db.User.update({
-					// update user add jukebox_playlistid sent from jukebox.pug
+					// remove playlistid so remote can't endlessly keep adding tracks when you close your jukebox
 					jukebox_playlistid: null
 				}, {
 					where: {
 						spotify_id: user
 					}
-				}
-				);
+				});
+				// redirects to your user profile where you can start a jukebox again
 				res.redirect('/');
 			} else {
+				// redirects to root and lets you login
 				res.redirect('/');
 			}
 	});
