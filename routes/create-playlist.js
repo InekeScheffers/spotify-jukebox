@@ -12,13 +12,15 @@ const spotifyAccessToken = require(__dirname + '/../modules/spotify-access-token
 
 router.route('/create-playlist')
 	.post((req, res) => {
-		// get input
+		// get name for new playlist from input from index.pug
 		let newPlaylistName = req.body.playlist
-		// check if access token is still valid
+		// if the field is not empty
 		if(newPlaylistName){
+			// check if access token is still valid
 			spotifyAccessToken.getValidToken(req.session.user)
 				.then((accessToken) => {
 					// console.log("this is the access token: " + accessToken)
+
 					// store options for post request to spotify api
 					let options = {
 						url: `https://api.spotify.com/v1/users/${req.session.user}/playlists`,
@@ -29,36 +31,32 @@ router.route('/create-playlist')
 						json: true
 					};
 
-					console.log(options)
 					// post new playlist via spotify api call
 					request.post(options, (error, response, body) => {
-						// if success
+						// if successfully created new playlist
 						if (!error && response.statusCode === 201) {
-							// send to public/add-track.js
-							console.log('playlist added?')
-							console.log(body.id)
+							//console.log(body.id)
+
+							// update jukebox_playlistid with the id of the playlist just created
+							db.User.update({
+								// update user add jukebox_playlistid sent from spotify api in body
+								jukebox_playlistid: body.id
+							}, {
+								where: {
+									spotify_id: req.session.user
+								}
+							}
+							);
+							// redirect to jukebox
+							res.redirect('/jukebox');
 						} else {
-							console.log('fail')
-							console.log(body)
+							res.redirect('/');
 						}
 					});
 				});
 		} else {
-			res.redirect('/')
+			res.redirect('/');
 		}
-		// create playlist through api call
-		// get playlist_id and then update:
-
-		// db.User.update({
-		// 	// update user add jukebox_playlistid sent from jukebox.pug
-		// 	jukebox_playlistid: req.body.playlist_id
-		// }, {
-		// 	where: {
-		// 		spotify_id: req.session.user
-		// 	}
-		// }
-		// );
-		// res.redirect('/jukebox');
 	})
 	.get((req, res) => {
 		res.redirect('/');
