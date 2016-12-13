@@ -37,5 +37,8 @@ html
 					form#create-form(action='/create-playlist' method='POST')
 						input(name='playlist' placeholder='Name your new playlist')
 						button(type="submit") Create a playlist
+				//- destroys session and deletes user from database, route: logout.js
+				div#logout
+					a.btn.btn-primary(href="/logout") Log out
 
 		include includes/footer.pug
