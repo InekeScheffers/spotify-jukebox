@@ -1,0 +1,47 @@
+body#login {
+	background-image: radial-gradient(rgba(0,0,0,0),rgba(0,0,0,1
+		)), 
+	url("/images/jukebox2.jpg");
+
+	h1 {
+		font-size: 70px;
+		letter-spacing: 10px;
+
+		-webkit-transition: all 3s;
+		-moz-transition: all 3s;
+		transition: all 3s;
+
+		-webkit-animation: neon1 1.5s ease-in-out infinite alternate;
+		-moz-animation: neon1 1.5s ease-in-out infinite alternate;
+		animation: neon1 1.5s ease-in-out infinite alternate;
+  	}
+
+	@-webkit-keyframes neon1 {
+		from {
+			text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF1177, 0 0 70px #FF1177, 0 0 80px #FF1177, 0 0 100px #FF1177, 0 0 150px #FF1177;
+		}
+	 	to {
+			text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF1177, 0 0 35px #FF1177, 0 0 40px #FF1177, 0 0 50px #FF1177, 0 0 75px #FF1177;
+		}
+	}
+
+	.btn-success {
+		border-radius:23px;
+	}
+
+	.icon-spotify {
+		padding-left: 11px;
+
+		span{
+			background: url("/images/spotify.png") no-repeat 0 -4px;
+			padding-left: 20px;
+			background-size: 14px 14px;
+			background-position: 0px center;
+		}
+	}
+
+	h4 {
+		color: white;
+		margin-top: 10px;
+	}
+}
