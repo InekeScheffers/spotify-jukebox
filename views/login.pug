@@ -1,12 +1,13 @@
 html
 	include includes/header.pug
 
-	body
+	body#login
 		div.container
-			div#login
-				h1 Welcome to Spotify Jukebox
-				a.btn.btn-primary(href="/login") Log in with Spotify
+			div
+				h1 YOUR OWN JUKEBOX
+				a.btn.btn-success.icon-spotify(href="/login")
+					span Log in to Spotify
 				//- message when logged in failed, or when successfully logged out
-				h5#errormessage=message
+				h4#errormessage=message
 
 		include includes/footer.pug

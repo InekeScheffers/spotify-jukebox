@@ -1,2 +1,34 @@
+// css for variables
+@font-face {
+    font-family: Monoton;
+    src: url(/stylesheets/fonts/Monoton-Regular.ttf);
+}
+
+//global variables
+$title-font: Monoton;
+$background-color: #181818;
+
 // Include other sass modules here:
-// bv: @import 'login';
+@import 'login';
+
+// Global scss
+body {
+	background-color: $background-color;
+	// to vertically center, materialize sticky footer trick
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+
+	.container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		flex: 1 0 auto;
+		text-align: center;
+	}
+}
+
+h1, h2 {
+	font-family: $title-font;
+	color: white;
+}
