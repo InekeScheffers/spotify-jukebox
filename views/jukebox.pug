@@ -6,6 +6,7 @@ html
 			div
 				//- div#owner-jukebox
 				//- 	h1 #{user_name}'s jukebox
+				h1 Put another dime in the jukebox, baby
 				div#player
 					iframe(src="" + jukebox_url width="633" height="300" frameborder="0" allowtransparency="true"
 					id="spotify_player")
@@ -14,11 +15,11 @@ html
 					//- input(id ="track_id" name="track_id" value="7r8Yc8CBLuk18OJ89u5ou8")
 					//- button.btn.btn-primary#add-track Add track
 				//- destroys session and deletes user from database, route: logout.js
-				h2 Put another dime in the jukebox, baby
-				div#remote-url.panel
+				//- h2 Put another dime in the jukebox, baby
+				div.panel
 					div.panel-body
-						h4 Follow this link on your remote device to add a track to this jukebox
-						a(href="/add-track/" + user_id target="_blank") 
+						h4 Follow this link on your remote device to add a track to #{user_name}'s jukebox
+						a#remote-url(href="/add-track/" + user_id target="_blank") 
 							span#origin 
 							span /add-track/#{user_id}
 					div.panel-footer
