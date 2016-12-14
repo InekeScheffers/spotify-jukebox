@@ -54,8 +54,8 @@ router.route('/login')
 					scope: scope,
 					redirect_uri: redirect_uri,
 					state: state,
-					// force to approve app again
-					// show_dialog: true
+					// force to approve app again, or switch user
+					show_dialog: true
 				}));
 		}
 	});
