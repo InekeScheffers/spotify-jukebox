@@ -1,4 +1,4 @@
-body#login {
+body#index {
 	// because of bug in webpack have to copy paste the h1 neon effect on all pages i need it
 	h1 {
 		font-size: 70px;
@@ -17,13 +17,52 @@ body#login {
 		from {
 			text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF1177, 0 0 70px #FF1177, 0 0 80px #FF1177, 0 0 100px #FF1177, 0 0 150px #FF1177;
 		}
- 		to {
+		to {
 			text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF1177, 0 0 35px #FF1177, 0 0 40px #FF1177, 0 0 50px #FF1177, 0 0 75px #FF1177;
 		}
 	}
 
-	h4#message {
-		color: white;
-		margin-top: 10px;
+	.panel {
+		max-width: 633px;
+		background-color: $spotify-color;
+		box-shadow: 5px 5px 5px #181818 !important;
+		border: 0px;
+		margin: 0 auto;
+
+		img {
+			margin: 5px;
+		}
+
+		.dl-horizontal {
+			margin-bottom: 0px;
+			text-align: right;
+
+			form {
+				margin-top: 5px;
+
+				select, input {
+					width: 250px;
+					border-radius: 5px;
+					height: 26px;
+				}
+
+				button {
+					width: 140px;
+					margin-left: 15px;
+					margin-top: 5px;
+					margin-bottom: 5px;
+				}
+			}
+
+			form#choose-form {
+				margin-bottom: 20px;
+			}
+		}
+
+		.panel-footer {
+			text-align: right;
+			background-color: #3d3d3d;
+			border-top-color: #FF1177;
+		}
 	}
 }

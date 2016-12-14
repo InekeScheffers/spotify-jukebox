@@ -1,23 +1,26 @@
 // css for variables
 @font-face {
-    font-family: Monoton;
-    src: url(/stylesheets/fonts/Monoton-Regular.ttf);
+	font-family: Monoton;
+	src: url(/stylesheets/fonts/Monoton-Regular.ttf);
 }
 
 //global variables
 $title-font: Monoton;
-$background-color: #181818;
+$spotify-color: #181818;
 
 // Include other sass modules here:
 @import 'login';
+@import 'index';
 
 // Global scss
 body {
-	background-color: $background-color;
+	background-color: #a4e4a4;
 	// to vertically center, materialize sticky footer trick
 	display: flex;
 	min-height: 100vh;
 	flex-direction: column;
+
+	background-image: radial-gradient(rgba(0,0,0,0),rgba(0,0,0,1)), url("/images/jukebox2.jpg");
 
 	.container {
 		display: flex;
@@ -25,6 +28,21 @@ body {
 		justify-content: center;
 		flex: 1 0 auto;
 		text-align: center;
+
+		.btn-success {
+			border-radius:23px;
+		}
+
+		.icon-spotify {
+			padding-left: 11px;
+
+			span{
+				background: url("/images/spotify.png") no-repeat 0 -4px;
+				padding-left: 20px;
+				background-size: 14px 14px;
+				background-position: 0px center;
+			}
+		}
 	}
 }
 

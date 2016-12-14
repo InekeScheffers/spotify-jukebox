@@ -1,44 +1,47 @@
 html
 	include includes/header.pug
 
-	body
+	body#index
 		div.container
 			div
 				div#user-profile
-					h1 Logged in as #{user.display_name}
-					div.media
-						div.pull-left
-							img.media-object(width='150', src="" + user.profile_image)
-						div.media-body
-							dl.dl-horizontal
-								dt Display name
-									dd #{user.display_name}
-								dt Id
-									dd #{user.spotify_id}
-								dt Email
-									dd #{user.email}
-								dt Spotify URI
-									dd #{user.uri}
-								dt Country
-									dd #{user.country}
-								dt Jukebox id
-									dd #{user.jukebox_playlistid}
-				div#playlist-dropdown
-					form#choose-form(action='/select-playlist' method='POST')
-						select(name='playlist_id')
-							//- loop through all playlists stored in object playlist_dropdown sent from index.js
-							each item in playlist_dropdown
-								//- value is playlist_id, shown in dropdown is name of playlist
-								option(value=item.id)= item.name
-						button(type="submit") Choose a playlist
-				div
-					h4 or
-				div#create-playlist
-					form#create-form(action='/create-playlist' method='POST')
-						input(name='playlist' placeholder='Name your new playlist')
-						button(type="submit") Create a playlist
-				//- destroys session and deletes user from database, route: logout.js
-				div#logout
-					a.btn.btn-primary(href="/logout") Log out
+					h1 Welcome, #{user.display_name}
+					div.media.panel
+						div.panel-body
+							div.pull-left
+								img.media-object(width='150', src="" + user.profile_image)
+							div.media-body
+								dl.dl-horizontal
+									//- dt Display name
+									//- 	dd #{user.display_name}
+									//- dt Id
+									//- 	dd #{user.spotify_id}
+									//- dt Email
+									//- 	dd #{user.email}
+									//- dt Spotify URI
+									//- 	dd #{user.uri}
+									//- dt Country
+									//- 	dd #{user.country}
+									//- dt Jukebox id
+									//- 	dd #{user.jukebox_playlistid}
+
+									div#playlist-dropdown
+										form#choose-form(action='/select-playlist' method='POST')
+											select(name='playlist_id')
+												//- loop through all playlists stored in object playlist_dropdown sent from index.js
+												each item in playlist_dropdown
+													//- value is playlist_id, shown in dropdown is name of playlist
+													option(value=item.id)= item.name
+											button.btn.btn-success.icon-spotify(type="submit") 
+												span Choose playlist
+									div#create-playlist
+										form#create-form(action='/create-playlist' method='POST')
+											input(name='playlist' placeholder='Name your new playlist')
+											button.btn.btn-success.icon-spotify(type="submit") 
+												span Create playlist
+						div.panel-footer
+							//- destroys session and deletes user from database, route: logout.js
+							div#logout
+								a.btn.btn-primary(href="/logout") Log out
 
 		include includes/footer.pug
