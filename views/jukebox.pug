@@ -4,24 +4,26 @@ html
 	body#jukebox
 		div.container
 			div
-				div#owner-jukebox
-					h2 Welcome to the jukebox of #{user_name}
+				//- div#owner-jukebox
+				//- 	h1 #{user_name}'s jukebox
 				div#player
-					iframe(src="" + jukebox_url width="1000" height="300" frameborder="0" allowtransparency="true"
+					iframe(src="" + jukebox_url width="633" height="300" frameborder="0" allowtransparency="true"
 					id="spotify_player")
 
 					//- input field with static data for now to add a track
 					//- input(id ="track_id" name="track_id" value="7r8Yc8CBLuk18OJ89u5ou8")
 					//- button.btn.btn-primary#add-track Add track
 				//- destroys session and deletes user from database, route: logout.js
-				div#end-jukebox
-					a.btn.btn-primary(href="/end-jukebox") End this jukebox
-				div#remote-url
-					h2 Put another dime in the jukebox, baby
-					h4 Follow this link on your remote device to add a track to this jukebox
-					a(href="/add-track/" + user_id target="_blank") 
-						span#origin 
-						span /add-track/#{user_id}
+				h2 Put another dime in the jukebox, baby
+				div#remote-url.panel
+					div.panel-body
+						h4 Follow this link on your remote device to add a track to this jukebox
+						a(href="/add-track/" + user_id target="_blank") 
+							span#origin 
+							span /add-track/#{user_id}
+					div.panel-footer
+						div#end-jukebox
+							a.btn.btn-primary(href="/end-jukebox") End this jukebox
 
 
 		include includes/footer.pug

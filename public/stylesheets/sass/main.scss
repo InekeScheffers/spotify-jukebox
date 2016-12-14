@@ -11,6 +11,7 @@ $spotify-color: #181818;
 // Include other sass modules here:
 @import 'login';
 @import 'index';
+@import 'jukebox';
 
 // Global scss
 body {
@@ -49,4 +50,18 @@ body {
 h1, h2 {
 	font-family: $title-font;
 	color: white;
+}
+
+.panel {
+	max-width: 633px;
+	background-color: $spotify-color;
+	box-shadow: 5px 5px 5px #181818 !important;
+	border: 0px;
+	margin: 0 auto;
+
+	.panel-footer {
+		text-align: right;
+		background-color: #282828;
+		border-top-color: #FF1177;
+	}
 }
