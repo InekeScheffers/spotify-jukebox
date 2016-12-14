@@ -12,6 +12,7 @@ $spotify-color: #181818;
 @import 'login';
 @import 'index';
 @import 'jukebox';
+@import 'remote';
 
 // Global scss
 body {
@@ -53,7 +54,7 @@ h1, h2 {
 }
 
 .panel {
-	max-width: 633px;
+	width: 633px;
 	background-color: $spotify-color;
 	box-shadow: 5px 5px 5px #181818 !important;
 	border: 0px;
