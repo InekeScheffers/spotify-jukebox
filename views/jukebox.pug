@@ -23,8 +23,9 @@ html
 							img(src="" + jukebox_qrcode)
 						div
 							a#remote-url(href="/add-track/" + user_id target="_blank") 
-								span#origin 
-								span /add-track/#{user_id}
+								//- span#origin 
+								//- span /add-track/#{user_id}
+								span #{remote_url}
 					div.panel-footer
 						div#end-jukebox
 							a.btn.btn-primary(href="/end-jukebox") End this jukebox

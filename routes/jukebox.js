@@ -22,13 +22,15 @@ router.route('/jukebox')
 				}).then((user) => {
 					// if there is a playlist chosen, otherwise redirect to '/' to choose one
 					if(user.jukebox_playlistid) {
+						// url for demo is now the open port, also in .env
+						let remote_url = `${process.env.BASE_URL}/add-track/${user.spotify_id}`;
 						return new Promise((resolve, reject) => {
 							qrcode.toDataURL(`${process.env.BASE_URL}/add-track/${user.spotify_id}`, (err,url) => {
 								resolve(url);
 							})
 						}).then((url) => {
 							// render jukebox.pug and send url of selected playlist
-							res.render('jukebox', {user_id: user.spotify_id, user_name: user.display_name, jukebox_url: `https://embed.spotify.com/?uri=spotify:user:${user.spotify_id}:playlist:${user.jukebox_playlistid}`, jukebox_qrcode: url});
+							res.render('jukebox', {user_id: user.spotify_id, user_name: user.display_name, jukebox_url: `https://embed.spotify.com/?uri=spotify:user:${user.spotify_id}:playlist:${user.jukebox_playlistid}`, jukebox_qrcode: url, remote_url: remote_url});
 						})
 					} else {
 						res.redirect('/');
