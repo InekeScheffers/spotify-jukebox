@@ -19,9 +19,12 @@ html
 				div.panel
 					div.panel-body
 						h4 Follow this link on your remote device to add a track to #{user_name}'s jukebox
-						a#remote-url(href="/add-track/" + user_id target="_blank") 
-							span#origin 
-							span /add-track/#{user_id}
+						div
+							img(src="" + jukebox_qrcode)
+						div
+							a#remote-url(href="/add-track/" + user_id target="_blank") 
+								span#origin 
+								span /add-track/#{user_id}
 					div.panel-footer
 						div#end-jukebox
 							a.btn.btn-primary(href="/end-jukebox") End this jukebox

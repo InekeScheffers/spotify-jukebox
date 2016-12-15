@@ -25,6 +25,7 @@
     "express-session": "^1.14.2",
     "pg": "^6.1.0",
     "pug": "^2.0.0-beta6",
+    "qrcode": "^0.5.0",
     "querystring": "^0.2.0",
     "request": "^2.79.0",
     "sequelize": "^3.27.0"
