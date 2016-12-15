@@ -18,7 +18,7 @@ const router = express.Router();
 // stored client id and secret key in environment var
 const client_id = process.env.DB_CLIENT_ID; // App's client id
 const client_secret = process.env.DB_CLIENT_SECRET; // App's secret key
-const redirect_uri = 'http://localhost:8000/callback'; // App's redirect uri
+const redirect_uri = `${process.env.BASE_URL}/callback`; // App's redirect uri
 
 let generateRandomString = (length) => {
 	let text = '';
