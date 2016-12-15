@@ -23,6 +23,17 @@ body#remote {
 	.panel {
 		width: 400px;
 
+		.btn-success {
+			border-radius: 50%;
+			width: 28px;
+			height: 28px;
+			margin-bottom: 5px;
+			padding-top: 4px;
+			padding-right: 4px;
+			padding-bottom: 6px;
+			padding-left: 6px;
+		}
+
 		.panel-footer {
 			text-align: left;
 
