@@ -38,7 +38,7 @@ if($('#remote').length > 0) {
 							// store path to album
 							let album = data.tracks.items[i].album;
 							// append track id + name to list #results
-							$('#results').append(`<li><button data-trackId=${track.id} class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button> ${artist.name} - ${track.name} - ${album.name}</li>`)
+							$('#results').append(`<li><button data-trackId=${track.id} class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button> ${artist.name} - ${track.name} - ${album.name}</li>`)
 						}
 					}
 				});
@@ -65,10 +65,16 @@ if($('#remote').length > 0) {
 			if(data.redirect) {
 				window.location.href = data.redirect; 
 			} else {
+
+				$('#track-message').empty();
 				// logs if track is added or not
 				// console.log(data);
 				// shows message if it's added or not
-				$('#track-message').append(data.message)
+				$('#track-message').append(data.message);
+				// remove message after 3 seconds
+				setTimeout(() => {
+					$('#track-message').empty();
+				}, 3000);
 			}			
 		});
 	});

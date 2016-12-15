@@ -4,14 +4,18 @@ html
 	body#remote
 		div.container
 			div#owner-jukebox
-				h2 Welcome to the jukebox of #{user_name}
-			div#search-and-add
-				h2 Add track to jukebox
-				//- search bar
-				input#search(type ='text', placeholder ='search for track' name ='search' autocomplete="off" list="results")
-				//- show results in list
-				ul#results(style="list-style-type:none")
-			div
-				p#track-message
+				//- h2 Welcome to the jukebox of #{user_name}
+				h1 Add track to #{user_name}'s jukebox
+			div#search-and-add.panel
+				//- h2 Add track to #{user_name}'s jukebox
+				div.panel-body
+					//- search bar
+					input#search(type ='text', placeholder ='search for track' name ='search' autocomplete="off" list="results")
+				div.panel-footer
+					p#track-message
+					//- show results in list
+					ul#results(style="list-style-type:none")
+			//- div
+			//- 	p#track-message
 
 		include includes/footer.pug
