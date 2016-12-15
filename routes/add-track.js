@@ -63,7 +63,7 @@ router.route('/add-track/:user_id')
 							// if success
 							if (!error && response.statusCode === 201) {
 								// send to public/add-track.js
-								res.send({message: 'Track added, your track will appear in the jukebox shortly'});
+								res.send({message: 'Your track will appear in the jukebox shortly'});
 							} else {
 								res.send({message: 'Oops try again', error: error, responsestatusCode: response.statusCode});
 							}

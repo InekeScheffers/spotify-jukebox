@@ -65,10 +65,16 @@ if($('#remote').length > 0) {
 			if(data.redirect) {
 				window.location.href = data.redirect; 
 			} else {
+
+				$('#track-message').empty();
 				// logs if track is added or not
 				// console.log(data);
 				// shows message if it's added or not
-				$('#track-message').append(data.message)
+				$('#track-message').append(data.message);
+				// remove message after 3 seconds
+				setTimeout(() => {
+					$('#track-message').empty();
+				}, 3000);
 			}			
 		});
 	});
