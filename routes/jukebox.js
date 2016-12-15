@@ -1,4 +1,8 @@
 const express = require('express');
+// require module to make qrcode of remote url
+const qrcode = require('qrcode');
+// require and configure dotenv, to store keys savely in .env and access them as environment variables
+const dotenv = require('dotenv').config();
 
 // create a router
 const router = express.Router();
@@ -18,8 +22,14 @@ router.route('/jukebox')
 				}).then((user) => {
 					// if there is a playlist chosen, otherwise redirect to '/' to choose one
 					if(user.jukebox_playlistid) {
-						// render jukebox.pug and send url of selected playlist
-						res.render('jukebox', {user_id: user.spotify_id, user_name: user.display_name, jukebox_url: `https://embed.spotify.com/?uri=spotify:user:${user.spotify_id}:playlist:${user.jukebox_playlistid}`});
+						return new Promise((resolve, reject) => {
+							qrcode.toDataURL(`${process.env.BASE_URL}/add-track/${user.spotify_id}`, (err,url) => {
+								resolve(url);
+							})
+						}).then((url) => {
+							// render jukebox.pug and send url of selected playlist
+							res.render('jukebox', {user_id: user.spotify_id, user_name: user.display_name, jukebox_url: `https://embed.spotify.com/?uri=spotify:user:${user.spotify_id}:playlist:${user.jukebox_playlistid}`, jukebox_qrcode: url});
+						})
 					} else {
 						res.redirect('/');
 					}
