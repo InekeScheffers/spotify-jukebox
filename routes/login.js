@@ -110,16 +110,17 @@ router.route('/callback')
 
 						// update when user already exists or create/insert when user doesn't exist
 						// checks through spotify_id 'cause in database it's stated this one should be unique
+						// ? || when somebody doesn't have a display_name, image, email or country filled it, otherwise it crashes
 						db.User.upsert({
-							spotify_id: 	body.id, 
+							spotify_id: 	body.id,
 							access_token: 	access_token,
 							refresh_token: 	refresh_token,
 							access_expires: access_expires,
-							display_name: 	body.display_name,
-							profile_image: 	body.images[0].url || 'placeholder.jpg',
-							email: 			body.email,
+							display_name: 	body.display_name || 'secret user',
+							profile_image: 	body.images[0] ? body.images[0].url : 'placeholder.jpg',
+							email: 			body.email || 'no email',
 							uri: 			body.uri,
-							country: 		body.country
+							country: 		body.country || 'no country'
 						})
 						.then(() => {
 							//because upsert can only return a boolean, find the logged in user
