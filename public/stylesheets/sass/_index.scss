@@ -23,7 +23,7 @@ body#index {
 	}
 
 	.panel {
-		max-width: 633px;
+		width: 633px;
 		background-color: $spotify-color;
 		box-shadow: 5px 5px 5px #181818 !important;
 		border: 0px;
@@ -65,4 +65,35 @@ body#index {
 			border-top-color: #FF1177;
 		}
 	}
+
+	@media screen and (max-width: 700px) {
+		h1 {
+			font-size: 30px;
+			letter-spacing: 3px;
+		}
+
+		.panel {
+			width: 275px;
+
+			.pull-left {
+				float: none !important;
+
+				img {
+					display: block !important;
+					margin-left: auto !important;
+					margin-right: auto !important;
+				}
+			}
+
+			.dl-horizontal {
+				text-align: center;
+
+				button {
+					margin-left: 0px !important;
+				}
+			}
+
+		}
+	}
+
 }
