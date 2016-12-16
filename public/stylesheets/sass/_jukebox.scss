@@ -60,4 +60,31 @@ body#jukebox {
 			text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF1177, 0 0 35px #FF1177, 0 0 40px #FF1177, 0 0 50px #FF1177, 0 0 75px #FF1177;
 		}
 	}
+
+	@media screen and (max-width: 700px) {
+		h1 {
+			font-size: 30px;
+			letter-spacing: 3px;
+		}
+
+		iframe { 
+			width: 275px;
+		}
+
+		.panel {
+			width: 275px;
+
+			h4 {
+				font-size: 15px;
+			}
+
+			img {
+				margin-bottom: 5px;
+			}
+
+			#remote-url {
+				font-size: 15px;
+			}
+		}
+	}
 }
