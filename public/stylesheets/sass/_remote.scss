@@ -48,4 +48,15 @@ body#remote {
 	p {
 		color: #FF1177;
 	}
+
+	@media screen and (max-width: 500px) {
+		h1 {
+			font-size: 30px;
+			letter-spacing: 3px;
+		}
+
+		.panel {
+			width: 275px;
+		}
+	}
 }
