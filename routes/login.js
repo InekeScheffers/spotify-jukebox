@@ -116,7 +116,7 @@ router.route('/callback')
 							refresh_token: 	refresh_token,
 							access_expires: access_expires,
 							display_name: 	body.display_name,
-							profile_image: 	body.images[0].url,
+							profile_image: 	body.images[0].url || 'placeholder.jpg',
 							email: 			body.email,
 							uri: 			body.uri,
 							country: 		body.country
