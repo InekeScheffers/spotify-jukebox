@@ -26,4 +26,11 @@ body#login {
 		color: white;
 		margin-top: 10px;
 	}
+
+	@media screen and (max-width: 700px) {
+		h1 {
+			font-size: 40px;
+			letter-spacing: 3px;
+		}
+	}
 }
