@@ -33,11 +33,11 @@ let User = db.define('user', {
 	},
 	profile_image: {
 		type: Sequelize.STRING,
-		allowNull: false
+		allowNull: true
 	},
 	email: {
 		type: Sequelize.STRING,
-		allowNull: false
+		allowNull: true
 	},
 	uri: {
 		type: Sequelize.STRING,
@@ -45,7 +45,7 @@ let User = db.define('user', {
 	},
 	country: {
 		type: Sequelize.STRING,
-		allowNull: false
+		allowNull: true
 	},
 	jukebox_playlistid: {
 		type: Sequelize.STRING,
