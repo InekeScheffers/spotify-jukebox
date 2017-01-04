@@ -22,7 +22,8 @@ body {
 	min-height: 100vh;
 	flex-direction: column;
 
-	background-image: radial-gradient(rgba(0,0,0,0),rgba(0,0,0,1)), url("/images/jukebox2.jpg");
+	background: radial-gradient(rgba(0,0,0,0),rgba(0,0,0,1)), url("/images/jukebox2.png") no-repeat center center fixed;
+	background-size: cover;
 
 	.container {
 		display: flex;
