@@ -2,23 +2,22 @@ body#remote {
 	// because of bug in webpack have to copy paste the h1 neon effect on all pages i need it
 	h1 {
 		margin-bottom: 20px;
-		// -webkit-transition: all 3s;
-		// -moz-transition: all 3s;
-		// transition: all 3s;
+		text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF1177, 0 0 70px #FF1177, 0 0 80px #FF1177, 0 0 100px #FF1177, 0 0 150px #FF1177;
 
-		// -webkit-animation: neon1 1.5s ease-in-out infinite alternate;
-		// -moz-animation: neon1 1.5s ease-in-out infinite alternate;
-		// animation: neon1 1.5s ease-in-out infinite alternate;
+		-webkit-animation: neon 1.5s;
+		-moz-animation: neon 1.5s;
+		animation: neon 1.5s;
 	}
 
-	// @-webkit-keyframes neon1 {
-	// 	from {
-	// 		text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF1177, 0 0 70px #FF1177, 0 0 80px #FF1177, 0 0 100px #FF1177, 0 0 150px #FF1177;
-	// 	}
-	// 	to {
-	// 		text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF1177, 0 0 35px #FF1177, 0 0 40px #FF1177, 0 0 50px #FF1177, 0 0 75px #FF1177;
-	// 	}
-	// }
+	// neon-sign flickering
+	@-webkit-keyframes neon {
+		0%,58.999%,61%,85.999%,96%,100% {
+			text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #FF1177, 0 0 70px #FF1177, 0 0 80px #FF1177, 0 0 100px #FF1177, 0 0 150px #FF1177;;
+		}
+		59%,60.999%,86%,95.999% { 
+			text-shadow: none; 
+		}
+	}
 
 	.panel {
 		width: 400px;
